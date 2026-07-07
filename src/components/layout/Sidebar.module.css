@@ -1,0 +1,83 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 25;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  max-width: 85vw;
+  background-color: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  z-index: 30;
+  transform: translateX(-100%);
+  transition: transform var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.sidebarOpen {
+  transform: translateX(0);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.closeBtn {
+  background: none;
+  font-size: 1.2rem;
+  color: var(--color-text);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+.closeBtn:hover {
+  background-color: var(--color-border);
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.navLink {
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+.navLink:hover {
+  background-color: var(--color-border);
+}
+
+.navLinkActive {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.logoutBtn {
+  margin-top: auto;
+  background-color: transparent;
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+  padding: 0.6rem;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+.logoutBtn:hover {
+  background-color: var(--color-danger);
+  color: #fff;
+}

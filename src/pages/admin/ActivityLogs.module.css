@@ -1,0 +1,82 @@
+.container {
+  padding: 1.5rem;
+}
+
+.header p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.tableWrapper {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.8rem 1rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.table th {
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.roleTag {
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.roleUser {
+  background-color: rgba(107, 107, 107, 0.15);
+  color: var(--color-text-muted);
+}
+
+.roleAdmin {
+  background-color: rgba(47, 111, 237, 0.15);
+  color: var(--color-primary);
+}
+
+.roleChief {
+  background-color: rgba(230, 162, 60, 0.15);
+  color: var(--color-warning);
+}
+
+.detailsText {
+  color: var(--color-text-muted);
+  white-space: normal;
+  max-width: 280px;
+}
+
+.empty {
+  padding: 2.5rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.loading {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}

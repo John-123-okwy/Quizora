@@ -1,0 +1,105 @@
+.tableWrapper {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.table th {
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badgeActive {
+  background-color: rgba(30, 158, 90, 0.15);
+  color: var(--color-success);
+}
+
+.badgeInactive {
+  background-color: rgba(107, 107, 107, 0.15);
+  color: var(--color-text-muted);
+}
+
+.actionsCell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.iconBtn {
+  padding: 0.4rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.iconBtn:hover {
+  background-color: var(--color-border);
+}
+
+.editBtn {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.editBtn:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.deleteBtn {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.deleteBtn:hover {
+  background-color: var(--color-danger);
+  color: #fff;
+}
+
+.toggleBtn {
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.toggleBtn:hover {
+  background-color: var(--color-warning);
+  color: #fff;
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}

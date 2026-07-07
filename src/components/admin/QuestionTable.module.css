@@ -1,0 +1,118 @@
+.filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.filters select {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.85rem;
+}
+
+.tableWrapper {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table th {
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.questionCell {
+  max-width: 320px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.easy {
+  background-color: rgba(30, 158, 90, 0.15);
+  color: var(--color-success);
+}
+
+.medium {
+  background-color: rgba(230, 162, 60, 0.15);
+  color: var(--color-warning);
+}
+
+.hard {
+  background-color: rgba(214, 69, 69, 0.15);
+  color: var(--color-danger);
+}
+
+.actionsCell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.iconBtn {
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 500;
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.editBtn {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.editBtn:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.deleteBtn {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.deleteBtn:hover {
+  background-color: var(--color-danger);
+  color: #fff;
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}

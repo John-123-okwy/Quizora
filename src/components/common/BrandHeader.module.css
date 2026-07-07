@@ -1,0 +1,16 @@
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.small .name {
+  font-size: 1.1rem;
+}

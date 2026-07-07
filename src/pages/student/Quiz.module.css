@@ -1,0 +1,100 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.topBar {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.subjectName {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.navButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+  gap: 1rem;
+}
+
+.navBtn {
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.prevBtn {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.prevBtn:hover:not(:disabled) {
+  background-color: var(--color-border);
+}
+
+.prevBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.nextBtn {
+  background-color: var(--color-primary);
+  color: #fff;
+  margin-left: auto;
+}
+
+.nextBtn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.submitBtn {
+  background-color: var(--color-success);
+  color: #fff;
+  margin-left: auto;
+}
+
+.submitBtn:hover {
+  opacity: 0.9;
+}
+
+.sidebarStack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.warningBanner {
+  background-color: rgba(230, 162, 60, 0.12);
+  border: 1px solid var(--color-warning);
+  color: var(--color-warning);
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  grid-column: 1 / -1;
+}
+
+.loading {
+  padding: 3rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}

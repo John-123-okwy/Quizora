@@ -1,0 +1,75 @@
+.container {
+  padding: 1.5rem;
+  padding-bottom: 5rem;
+}
+
+.greeting {
+  font-size: 1.4rem;
+  margin-bottom: 0.25rem;
+}
+
+.subtext {
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.emptyState {
+  background-color: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.loading {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.selectionBar {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  z-index: 40;
+}
+
+.selectionText {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.selectionSubtext {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.startSelectedBtn {
+  padding: 0.6rem 1.2rem;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.startSelectedBtn:hover {
+  background-color: var(--color-primary-hover);
+}
