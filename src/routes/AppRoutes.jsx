@@ -5,6 +5,7 @@ import Register from '../pages/auth/Register';
 import ForgotPassword from '../pages/auth/ForgotPassword';
 import Onboarding from '../pages/Onboarding';
 import Dashboard from '../pages/student/Dashboard';
+import Profile from '../pages/Profile';
 import SubjectDetails from '../pages/student/SubjectDetails';
 import SessionConfirm from '../pages/student/SessionConfirm';
 import Quiz from '../pages/student/Quiz';
@@ -33,6 +34,7 @@ export default function AppRoutes() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       <Route path="/my-results" element={<ProtectedRoute><MyResults /></ProtectedRoute>} />
       <Route path="/subject/:subjectId" element={<ProtectedRoute><SubjectDetails /></ProtectedRoute>} />
       <Route path="/session/confirm" element={<ProtectedRoute><SessionConfirm /></ProtectedRoute>} />

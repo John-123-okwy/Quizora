@@ -35,7 +35,17 @@ export default function Navbar({ onToggleSidebar }) {
       </div>
 
       <div className={styles.right}>
-        <div className={styles.avatar}>{initials || '?'}</div>
+        <button
+          className={styles.avatarBtn}
+          onClick={() => navigate('/profile')}
+          aria-label="Go to profile"
+        >
+          {userProfile?.photoURL ? (
+            <img src={userProfile.photoURL} alt="Profile" className={styles.avatarImage} />
+          ) : (
+            <div className={styles.avatar}>{initials || '?'}</div>
+          )}
+        </button>
       </div>
     </header>
   );

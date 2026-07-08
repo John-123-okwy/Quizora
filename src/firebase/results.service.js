@@ -26,6 +26,8 @@ export async function submitExamResult({
   answers,
   questions,
   timeTakenSeconds,
+  tabSwitchCount,
+  tabSwitchViolations,
 }) {
   let score = 0;
   const answerDetails = questions.map((q) => {
@@ -49,11 +51,14 @@ export async function submitExamResult({
     userId,
     subjectId,
     subjectName,
+    subjectCode: subjectCode || '',
     score,
     totalQuestions: questions.length,
     answers: answerDetails,
     timeTakenSeconds,
     resultVisible,
+    tabSwitchCount: tabSwitchCount || 0,
+    tabSwitchViolations: tabSwitchViolations || [],
     submittedAt: serverTimestamp(),
   });
 
@@ -64,7 +69,7 @@ export async function submitExamResult({
     actorName: profile?.fullName || 'Unknown User',
     actorEmail: profile?.email || '',
     action: 'Submitted exam',
-    details: `${subjectCode ? `[${subjectCode}] ` : ''}${subjectName} — scored ${score}/${questions.length}`,
+    details: `${subjectCode ? `[${subjectCode}] ` : ''}${subjectName} — scored ${score}/${questions.length}${tabSwitchCount ? ` (${tabSwitchCount} tab switch${tabSwitchCount > 1 ? 'es' : ''})` : ''}`,
   });
 
   return { id: docRef.id, score, totalQuestions: questions.length, answers: answerDetails, resultVisible };

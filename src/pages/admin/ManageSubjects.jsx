@@ -42,6 +42,7 @@ export default function ManageSubjects() {
         numQuestions: Number(form.numQuestions),
         timeLimitMinutes: Number(form.timeLimitMinutes),
         resultsVisibility: form.resultsVisibility,
+        tabSwitchLimit: form.tabSwitchLimit ? Number(form.tabSwitchLimit) : null,
       }, actor);
       setEditingSubject(null);
     } else {

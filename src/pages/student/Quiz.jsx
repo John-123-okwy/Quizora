@@ -10,6 +10,7 @@ import Spinner from '../../components/common/Spinner';
 import { useAuth } from '../../contexts/AuthContext';
 import { useExamSession } from '../../contexts/ExamSessionContext';
 import { useTimer } from '../../hooks/useTimer';
+import { useTabSwitchDetection } from '../../hooks/useTabSwitchDetection';
 import { getSubjectById } from '../../firebase/subjects.service';
 import { getQuestionsBySubject } from '../../firebase/questions.service';
 import { submitExamResult } from '../../firebase/results.service';
@@ -40,6 +41,8 @@ function QuizInner({ subjectId }) {
 
   const startTimeRef = useRef(Date.now());
   const hasSubmittedRef = useRef(false);
+
+  const { switchCount, showWarning, dismissWarning, getViolations } = useTabSwitchDetection(!!subject && !submitting);
 
   useEffect(() => {
     async function loadExam() {
@@ -75,6 +78,8 @@ function QuizInner({ subjectId }) {
         answers,
         questions,
         timeTakenSeconds,
+        tabSwitchCount: switchCount,
+        tabSwitchViolations: getViolations(),
       });
 
       recordResult(subjectId, result.id);
@@ -94,8 +99,19 @@ function QuizInner({ subjectId }) {
         navigate(`/result/${result.id}`, { replace: true });
       }
     },
-    [currentUser, subjectId, subject, answers, questions, navigate, recordResult, getSessionInfoForSubject]
+    [currentUser, subjectId, subject, answers, questions, navigate, recordResult, getSessionInfoForSubject, switchCount, getViolations]
   );
+
+  // Auto-submit if this subject has an admin-set tab-switch limit and it's been exceeded
+  useEffect(() => {
+    if (
+      subject?.tabSwitchLimit &&
+      switchCount >= subject.tabSwitchLimit &&
+      !hasSubmittedRef.current
+    ) {
+      handleSubmit(false);
+    }
+  }, [switchCount, subject, handleSubmit]);
 
   const { secondsLeft } = useTimer(
     subject ? subject.timeLimitMinutes * 60 : 0,
@@ -229,6 +245,22 @@ function QuizInner({ subjectId }) {
           />
         </div>
       </div>
+
+      {showWarning && (
+        <div className={styles.tabWarningOverlay}>
+          <div className={styles.tabWarningBox}>
+            <div className={styles.tabWarningIcon}>⚠️</div>
+            <div className={styles.tabWarningTitle}>Tab Switch Detected</div>
+            <p className={styles.tabWarningText}>
+              Leaving this exam tab has been recorded ({switchCount} time{switchCount > 1 ? 's' : ''} so far).
+              This is visible to your administrator. Please stay on this page until you submit.
+            </p>
+            <button className={styles.tabWarningBtn} onClick={dismissWarning}>
+              I Understand, Continue
+            </button>
+          </div>
+        </div>
+      )}
 
       {showSubmitConfirm && (
         <ConfirmModal

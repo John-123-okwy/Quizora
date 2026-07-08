@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DashboardLayout from '../../components/layout/DashboardLayout';
+import { useAuth } from '../../contexts/AuthContext';
 import { getResultById } from '../../firebase/results.service';
 import { formatSecondsToMMSS } from '../../utils/formatTime';
+import { generateResultSummaryPDF } from '../../utils/pdfExport';
+import { parseFullName } from '../../utils/nameHelpers';
 import styles from './Result.module.css';
 
 export default function Result() {
   const { resultId } = useParams();
+  const { userProfile } = useAuth();
   const navigate = useNavigate();
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const { initials } = parseFullName(userProfile?.fullName || '');
 
   useEffect(() => {
     getResultById(resultId).then((data) => {
@@ -17,6 +23,13 @@ export default function Result() {
       setLoading(false);
     });
   }, [resultId]);
+
+  const handleDownload = () => {
+    generateResultSummaryPDF(result, {
+      fullName: userProfile.fullName,
+      email: userProfile.email,
+    });
+  };
 
   if (loading) {
     return (
@@ -34,13 +47,31 @@ export default function Result() {
     );
   }
 
+  const StudentStrip = () => (
+    <div className={styles.studentStrip}>
+      {userProfile.photoURL ? (
+        <img src={userProfile.photoURL} alt="Profile" className={styles.studentAvatarImage} />
+      ) : (
+        <div className={styles.studentAvatarInitials}>{initials || '?'}</div>
+      )}
+      <div>
+        <div className={styles.studentName}>{userProfile.fullName}</div>
+        <div className={styles.studentEmail}>{userProfile.email}</div>
+      </div>
+    </div>
+  );
+
   if (!result.resultVisible) {
     return (
       <DashboardLayout>
         <div className={styles.container}>
           <div className={styles.card}>
             <h1>Exam Submitted</h1>
-            <p className={styles.subjectName}>{result.subjectName}</p>
+            <div className={styles.subjectHeaderRow}>
+              <span>{result.subjectName}</span>
+              {result.subjectCode && <span className={styles.subjectCodeBadge}>{result.subjectCode}</span>}
+            </div>
+            <StudentStrip />
             <div className={styles.lockedBox}>
               <div className={styles.lockedIcon}>🔒</div>
               <p>
@@ -65,7 +96,12 @@ export default function Result() {
       <div className={styles.container}>
         <div className={styles.card}>
           <h1>Exam Completed</h1>
-          <p className={styles.subjectName}>{result.subjectName}</p>
+          <div className={styles.subjectHeaderRow}>
+            <span style={{ color: 'var(--color-text-muted)' }}>{result.subjectName}</span>
+            {result.subjectCode && <span className={styles.subjectCodeBadge}>{result.subjectCode}</span>}
+          </div>
+
+          <StudentStrip />
 
           <div className={styles.scoreCircle}>
             <span className={styles.scoreValue}>{percentage}%</span>
@@ -95,6 +131,10 @@ export default function Result() {
               Review Answers
             </button>
           </div>
+
+          <button className={styles.downloadBtn} onClick={handleDownload}>
+            📄 Download Result (PDF)
+          </button>
         </div>
       </div>
     </DashboardLayout>

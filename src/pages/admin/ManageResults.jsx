@@ -28,7 +28,7 @@ export default function ManageResults() {
   const [resultToDelete, setResultToDelete] = useState(null);
   const [showClearAllConfirm, setShowClearAllConfirm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('name'); // name | score | date | time
+  const [sortBy, setSortBy] = useState('name');
 
   const actor = { uid: currentUser.uid, role: userProfile.role, fullName: userProfile.fullName, email: userProfile.email };
   const selectedSubject = subjects.find((s) => s.id === selectedSubjectId);
@@ -73,6 +73,8 @@ export default function ManageResults() {
       });
     } else if (sortBy === 'time') {
       sorted.sort((a, b) => a.timeTakenSeconds - b.timeTakenSeconds);
+    } else if (sortBy === 'violations') {
+      sorted.sort((a, b) => (b.tabSwitchCount || 0) - (a.tabSwitchCount || 0));
     }
     return sorted;
   }, [results, searchTerm, sortBy]);
@@ -161,6 +163,7 @@ export default function ManageResults() {
                   <option value="score">Sort: Highest Score</option>
                   <option value="date">Sort: Most Recent</option>
                   <option value="time">Sort: Fastest Time</option>
+                  <option value="violations">Sort: Most Tab Switches</option>
                 </select>
               </div>
             )}
@@ -181,6 +184,7 @@ export default function ManageResults() {
                       <th>Student</th>
                       <th>Score</th>
                       <th>Time Used</th>
+                      <th>Tab Switches</th>
                       <th>Submitted At</th>
                       <th>Visibility</th>
                       <th>Action</th>
@@ -192,6 +196,13 @@ export default function ManageResults() {
                         <td>{r.userFullName}</td>
                         <td>{r.score}/{r.totalQuestions}</td>
                         <td>{formatSecondsToMMSS(r.timeTakenSeconds)}</td>
+                        <td>
+                          {r.tabSwitchCount > 0 ? (
+                            <span className={styles.violationBadge}>⚠ {r.tabSwitchCount}</span>
+                          ) : (
+                            <span className={styles.noViolation}>—</span>
+                          )}
+                        </td>
                         <td>{formatFirestoreTimestamp(r.submittedAt)}</td>
                         <td>
                           <span className={`${styles.badge} ${r.resultVisible ? styles.visible : styles.hidden}`}>

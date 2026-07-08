@@ -32,6 +32,19 @@ export default function ResultDetailModal({ result, onClose }) {
           </div>
         </div>
 
+        {result.tabSwitchCount > 0 && (
+          <div className={styles.violationsList}>
+            <div className={styles.violationsTitle}>
+              ⚠ {result.tabSwitchCount} Tab Switch Violation{result.tabSwitchCount > 1 ? 's' : ''} Detected
+            </div>
+            {(result.tabSwitchViolations || []).map((timestamp, idx) => (
+              <div className={styles.violationTime} key={idx}>
+                Switch #{idx + 1}: {new Date(timestamp).toLocaleTimeString('en-US')}
+              </div>
+            ))}
+          </div>
+        )}
+
         {result.answers.map((ans, idx) => (
           <div className={styles.questionBlock} key={ans.questionId}>
             <div className={styles.qHeader}>

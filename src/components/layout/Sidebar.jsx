@@ -8,7 +8,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
   const handleLogout = async () => {
     await logout();
-    navigate('/');
+    navigate('/login');
   };
 
   const linkClass = ({ isActive }) =>
@@ -31,6 +31,9 @@ export default function Sidebar({ isOpen, onClose }) {
           </NavLink>
           <NavLink to="/my-results" className={linkClass} onClick={onClose}>
             My Results
+          </NavLink>
+          <NavLink to="/profile" className={linkClass} onClick={onClose}>
+            My Profile
           </NavLink>
           {(userProfile?.role === 'admin' || userProfile?.role === 'chief') && (
             <NavLink to="/admin" className={linkClass} onClick={onClose}>

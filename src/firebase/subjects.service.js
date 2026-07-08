@@ -39,6 +39,7 @@ export async function createSubject({
   numQuestions,
   timeLimitMinutes,
   resultsVisibility,
+  tabSwitchLimit,
   createdBy,
   actor,
 }) {
@@ -48,6 +49,7 @@ export async function createSubject({
     numQuestions: Number(numQuestions),
     timeLimitMinutes: Number(timeLimitMinutes),
     resultsVisibility: resultsVisibility || 'immediate',
+    tabSwitchLimit: tabSwitchLimit ? Number(tabSwitchLimit) : null,
     isActive: true,
     createdBy,
     createdAt: serverTimestamp(),

@@ -4,21 +4,34 @@ import styles from './QuestionTable.module.css';
 export default function QuestionTable({ questions, subjects, onEdit, onDelete }) {
   const [subjectFilter, setSubjectFilter] = useState('all');
   const [difficultyFilter, setDifficultyFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const subjectsById = useMemo(
     () => subjects.reduce((acc, s) => ({ ...acc, [s.id]: s }), {}),
     [subjects]
   );
 
-  const filtered = questions.filter((q) => {
-    const subjectMatch = subjectFilter === 'all' || q.subjectId === subjectFilter;
-    const difficultyMatch = difficultyFilter === 'all' || q.difficulty === difficultyFilter;
-    return subjectMatch && difficultyMatch;
-  });
+  const filtered = useMemo(() => {
+    return questions.filter((q) => {
+      const subjectMatch = subjectFilter === 'all' || q.subjectId === subjectFilter;
+      const difficultyMatch = difficultyFilter === 'all' || q.difficulty === difficultyFilter;
+      const searchMatch =
+        !searchTerm.trim() || q.text.toLowerCase().includes(searchTerm.trim().toLowerCase());
+      return subjectMatch && difficultyMatch && searchMatch;
+    });
+  }, [questions, subjectFilter, difficultyFilter, searchTerm]);
 
   return (
     <div>
       <div className={styles.filters}>
+        <input
+          className={styles.searchInput}
+          type="text"
+          placeholder="Search question text..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
         <select value={subjectFilter} onChange={(e) => setSubjectFilter(e.target.value)}>
           <option value="all">All Subjects</option>
           {subjects.map((s) => (
@@ -34,9 +47,15 @@ export default function QuestionTable({ questions, subjects, onEdit, onDelete })
         </select>
       </div>
 
+      <div className={styles.resultsCount}>
+        Showing {filtered.length} of {questions.length} question(s)
+      </div>
+
       {filtered.length === 0 ? (
         <div className={styles.tableWrapper}>
-          <p className={styles.empty}>No questions match this filter.</p>
+          <p className={styles.empty}>
+            {questions.length === 0 ? 'No questions added yet.' : 'No questions match your search or filters.'}
+          </p>
         </div>
       ) : (
         <div className={styles.tableWrapper}>

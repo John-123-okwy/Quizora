@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import DashboardLayout from '../../components/layout/DashboardLayout';
+import { useAuth } from '../../contexts/AuthContext';
 import { getResultById } from '../../firebase/results.service';
+import { generateFullReviewPDF } from '../../utils/pdfExport';
 import styles from './ReviewAnswers.module.css';
 
 export default function ReviewAnswers() {
   const { resultId } = useParams();
+  const { userProfile } = useAuth();
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -15,6 +18,13 @@ export default function ReviewAnswers() {
       setLoading(false);
     });
   }, [resultId]);
+
+  const handleDownloadReport = () => {
+    generateFullReviewPDF(result, {
+      fullName: userProfile.fullName,
+      email: userProfile.email,
+    });
+  };
 
   if (loading) {
     return (
@@ -54,13 +64,20 @@ export default function ReviewAnswers() {
 
         <div className={styles.summaryCard}>
           <div>
-            <div>{result.subjectName}</div>
+            <div>
+              {result.subjectName} {result.subjectCode ? `(${result.subjectCode})` : ''}
+            </div>
             <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
               Full breakdown with explanations
             </div>
           </div>
-          <div className={styles.summaryScore}>
-            {result.score}/{result.totalQuestions}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div className={styles.summaryScore}>
+              {result.score}/{result.totalQuestions}
+            </div>
+            <button className={styles.downloadReportBtn} onClick={handleDownloadReport}>
+              📄 Download PDF
+            </button>
           </div>
         </div>
 

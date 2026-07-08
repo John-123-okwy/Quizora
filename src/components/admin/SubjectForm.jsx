@@ -7,6 +7,7 @@ const EMPTY_FORM = {
   numQuestions: '',
   timeLimitMinutes: '',
   resultsVisibility: 'immediate',
+  tabSwitchLimit: '',
 };
 
 export default function SubjectForm({ onSubmit, editingSubject, onCancelEdit }) {
@@ -22,6 +23,7 @@ export default function SubjectForm({ onSubmit, editingSubject, onCancelEdit }) 
         numQuestions: editingSubject.numQuestions,
         timeLimitMinutes: editingSubject.timeLimitMinutes,
         resultsVisibility: editingSubject.resultsVisibility || 'immediate',
+        tabSwitchLimit: editingSubject.tabSwitchLimit || '',
       });
     } else {
       setForm(EMPTY_FORM);
@@ -48,6 +50,10 @@ export default function SubjectForm({ onSubmit, editingSubject, onCancelEdit }) 
     }
     if (!timeLimit || timeLimit < 1) {
       setError('Time limit must be at least 1 minute.');
+      return;
+    }
+    if (form.tabSwitchLimit && Number(form.tabSwitchLimit) < 1) {
+      setError('Tab-switch limit must be at least 1, or left blank to disable.');
       return;
     }
 
@@ -131,6 +137,19 @@ export default function SubjectForm({ onSubmit, editingSubject, onCancelEdit }) 
           <option value="immediate">Show immediately after submission</option>
           <option value="locked">Locked until admin releases it</option>
         </select>
+      </div>
+
+      <div className={styles.field}>
+        <label htmlFor="tabSwitchLimit">Tab-Switch Auto-Submit Limit (optional)</label>
+        <input
+          id="tabSwitchLimit"
+          name="tabSwitchLimit"
+          type="number"
+          min="1"
+          placeholder="Leave blank to disable — just log violations instead"
+          value={form.tabSwitchLimit}
+          onChange={handleChange}
+        />
       </div>
 
       <div className={styles.actions}>

@@ -137,3 +137,19 @@
   text-align: center;
   color: var(--color-text-muted);
 }
+
+.downloadReportBtn {
+  padding: 0.6rem 1.2rem;
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.downloadReportBtn:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
