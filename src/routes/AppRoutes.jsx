@@ -6,6 +6,7 @@ import ForgotPassword from '../pages/auth/ForgotPassword';
 import Onboarding from '../pages/Onboarding';
 import Dashboard from '../pages/student/Dashboard';
 import Profile from '../pages/Profile';
+import HelpSupport from '../pages/student/HelpSupport';
 import SubjectDetails from '../pages/student/SubjectDetails';
 import SessionConfirm from '../pages/student/SessionConfirm';
 import Quiz from '../pages/student/Quiz';
@@ -19,6 +20,7 @@ import ManageQuestions from '../pages/admin/ManageQuestions';
 import ManageResults from '../pages/admin/ManageResults';
 import ManageUsers from '../pages/admin/ManageUsers';
 import ActivityLogs from '../pages/admin/ActivityLogs';
+import SupportTickets from '../pages/admin/SupportTickets';
 import BootstrapChief from '../pages/admin/BootstrapChief';
 import Settings from '../pages/Settings';
 import NotFound from '../pages/NotFound';
@@ -35,6 +37,7 @@ export default function AppRoutes() {
       <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route path="/help" element={<ProtectedRoute><HelpSupport /></ProtectedRoute>} />
       <Route path="/my-results" element={<ProtectedRoute><MyResults /></ProtectedRoute>} />
       <Route path="/subject/:subjectId" element={<ProtectedRoute><SubjectDetails /></ProtectedRoute>} />
       <Route path="/session/confirm" element={<ProtectedRoute><SessionConfirm /></ProtectedRoute>} />
@@ -65,6 +68,10 @@ export default function AppRoutes() {
       <Route
         path="/admin/activity"
         element={<ProtectedRoute><RoleRoute allowedRoles={['admin', 'chief']}><ActivityLogs /></RoleRoute></ProtectedRoute>}
+      />
+      <Route
+        path="/admin/support"
+        element={<ProtectedRoute><RoleRoute allowedRoles={['admin', 'chief']}><SupportTickets /></RoleRoute></ProtectedRoute>}
       />
       <Route path="/bootstrap-chief" element={<ProtectedRoute><BootstrapChief /></ProtectedRoute>} />
       <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />

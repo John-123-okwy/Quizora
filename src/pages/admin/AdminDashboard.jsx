@@ -12,7 +12,7 @@ export default function AdminDashboard() {
       <div className={styles.container}>
         <h1>Admin Dashboard</h1>
         <p>Welcome, {userProfile?.fullName}.</p>
-        <span className={styles.roleTag}>{userProfile?.role} </span>
+        <span className={styles.roleTag}>{userProfile?.role} admin</span>
 
         <div className={styles.grid}>
           {isChief && (
@@ -38,6 +38,10 @@ export default function AdminDashboard() {
           <Link to="/admin/activity" className={styles.card}>
             <h3>Activity Logs</h3>
             <p>Monitor user and admin activity across the system.</p>
+          </Link>
+          <Link to="/admin/support" className={styles.card}>
+            <h3>Support Tickets</h3>
+            <p>View and respond to student help requests and complaints.</p>
           </Link>
         </div>
       </div>

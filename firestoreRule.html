@@ -58,5 +58,15 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    match /supportTickets/{ticketId} {
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow read: if request.auth != null
+                  && (resource.data.userId == request.auth.uid || isAdminOrChief());
+      allow update: if request.auth != null && isAdminOrChief()
+                    && request.resource.data.diff(resource.data).affectedKeys()
+                       .hasOnly(['adminReply', 'status', 'repliedAt']);
+      allow delete: if false;
+    }
+
   }
 }

@@ -14,6 +14,7 @@ import {
 import { db } from './config';
 import { getUserProfile } from './firestore.service';
 import { logActivity } from './activityLog.service';
+import { sendResultReleasedEmail } from '../services/email.service';
 
 const resultsRef = collection(db, 'examResults');
 
@@ -72,6 +73,18 @@ export async function submitExamResult({
     details: `${subjectCode ? `[${subjectCode}] ` : ''}${subjectName} — scored ${score}/${questions.length}${tabSwitchCount ? ` (${tabSwitchCount} tab switch${tabSwitchCount > 1 ? 'es' : ''})` : ''}`,
   });
 
+  // If results are visible immediately, notify the student right away by email too
+  if (resultVisible) {
+    sendResultReleasedEmail({
+      studentName: profile?.fullName || 'Student',
+      studentEmail: profile?.email,
+      subjectName,
+      subjectCode,
+      score,
+      totalQuestions: questions.length,
+    });
+  }
+
   return { id: docRef.id, score, totalQuestions: questions.length, answers: answerDetails, resultVisible };
 }
 
@@ -108,6 +121,7 @@ export async function getResultsBySubject(subjectId) {
 
 export async function setResultVisibility(resultId, visible, actor) {
   await updateDoc(doc(db, 'examResults', resultId), { resultVisible: visible });
+
   if (actor) {
     logActivity({
       actorId: actor.uid,
@@ -116,6 +130,23 @@ export async function setResultVisibility(resultId, visible, actor) {
       actorEmail: actor.email,
       action: visible ? 'Released a result' : 'Locked a result',
     });
+  }
+
+  // Only email when releasing (not when hiding)
+  if (visible) {
+    const resultSnap = await getDoc(doc(db, 'examResults', resultId));
+    if (resultSnap.exists()) {
+      const result = resultSnap.data();
+      const profile = await getUserProfile(result.userId);
+      sendResultReleasedEmail({
+        studentName: profile?.fullName || 'Student',
+        studentEmail: profile?.email,
+        subjectName: result.subjectName,
+        subjectCode: result.subjectCode,
+        score: result.score,
+        totalQuestions: result.totalQuestions,
+      });
+    }
   }
 }
 
@@ -134,6 +165,21 @@ export async function releaseAllResultsForSubject(subjectId, subjectName, actor)
       actorEmail: actor.email,
       action: 'Released all results',
       details: subjectName,
+    });
+  }
+
+  // Notify every student in this batch — only those who were previously hidden
+  // (snap was taken before the update, so we email everyone in this subject's results)
+  for (const docSnap of snap.docs) {
+    const result = docSnap.data();
+    const profile = await getUserProfile(result.userId);
+    sendResultReleasedEmail({
+      studentName: profile?.fullName || 'Student',
+      studentEmail: profile?.email,
+      subjectName: result.subjectName,
+      subjectCode: result.subjectCode,
+      score: result.score,
+      totalQuestions: result.totalQuestions,
     });
   }
 }

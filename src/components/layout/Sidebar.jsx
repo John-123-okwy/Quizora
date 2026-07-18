@@ -35,6 +35,9 @@ export default function Sidebar({ isOpen, onClose }) {
           <NavLink to="/profile" className={linkClass} onClick={onClose}>
             My Profile
           </NavLink>
+          <NavLink to="/help" className={linkClass} onClick={onClose}>
+            Help & Support
+          </NavLink>
           {(userProfile?.role === 'admin' || userProfile?.role === 'chief') && (
             <NavLink to="/admin" className={linkClass} onClick={onClose}>
               Admin Panel

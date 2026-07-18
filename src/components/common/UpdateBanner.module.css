@@ -1,0 +1,42 @@
+.banner {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  z-index: 90;
+  max-width: 90vw;
+}
+
+.text {
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.refreshBtn {
+  padding: 0.5rem 1.1rem;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.refreshBtn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.dismissBtn {
+  background: none;
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+  padding: 0.25rem;
+}

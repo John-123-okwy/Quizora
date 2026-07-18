@@ -5,6 +5,7 @@ import { ExamSessionProvider } from './contexts/ExamSessionContext';
 import AppRoutes from './routes/AppRoutes';
 import OfflineBanner from './components/common/OfflineBanner';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import UpdateBanner from './components/common/UpdateBanner';
 import './styles/global.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <BrowserRouter>
               <OfflineBanner />
               <AppRoutes />
+              <UpdateBanner />
             </BrowserRouter>
           </ExamSessionProvider>
         </AuthProvider>
